@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download de Vídeo</title>
+</head>
+<script>
+    // Função para limpar o campo de entrada após o clique no botão de download
+    function clearInput() {
+        document.getElementById('url-input').value = '';
+    }
+</script>
+
+<body>
+    <h1>Download de Vídeo do YouTube</h1>
+    {% if message %}
+    <p>{{ message|safe }}</p>
+    {% endif %}
+    <form method="POST" action="/">
+        <input type="text" name="url" placeholder="URL do vídeo do YouTube" required autocomplete="off">
+        <button type="submit" onClick = "clearInput()">Baixar</button>
+    </form>
+
+    <form method="POST" action="/hello">
+        <button type="submit">Desligar</button>
+    </form>
+
+</body>
+</html>

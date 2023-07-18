@@ -1,28 +1,82 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Download de Vídeo</title>
-</head>
-<script>
-    // Função para limpar o campo de entrada após o clique no botão de download
-    function clearInput() {
-        document.getElementById('url-input').value = '';
-    }
-</script>
+<html lang="pt-br">
+    <head>
+        <title>Download de Vídeo</title>
+        <meta charset="UTF-8"/>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <style>
+    </style>
 
-<body>
-    <h1>Download de Vídeo do YouTube</h1>
-    {% if message %}
-    <p>{{ message|safe }}</p>
-    {% endif %}
-    <form method="POST" action="/">
-        <input type="text" name="url" placeholder="URL do vídeo do YouTube" required autocomplete="off">
-        <button type="submit" onClick = "clearInput()">Baixar</button>
-    </form>
+    <body class="p-3 m-0 border-0" >
+        
+        
+        
+        <form method="POST" action="/" class = "container">
+            <h1>Download de Vídeo do YouTube</h1>
+            <div class="mb-3">
+                <label for="url" class="form-label">URL do vídeo</label>
+                <input 
+                name="url"
+                type="text"
+                class="form-control"
+                id="url"
+                aria-describedby="urlHelp"
+                placeholder="Insira o link do vídeo do youtube">
+                <div id="urlHelp" class="form-text">Link do vídeo a ser baixado</div>
+            </div>
 
-    <form method="POST" action="/hello">
-        <button type="submit">Desligar</button>
-    </form>
+            <select name="format" class="form-select mb-3" aria-label="Default select example">
+                <option value ="mp3" selected>mp3</option>,
+                <option value ="m4a">m4a</option>,
+                <option value ="mp4">mp4</option>,
+                <option value ="wav">wav</option>,
+                <option value ="ogg">ogg</option>,
+                <option value ="webm">webm</option>
+                <option value ="flv">flv</option>,
+                <option value ="3gp">3gp</option>,
+                <option value ="aac">aac</option>,
+            </select>
 
-</body>
+            <button 
+            type="submit" 
+            class="btn btn-primary" 
+            onclick="document.getElementById('url-input').value = ''"
+            >
+                Download
+            </button>
+        </form>
+
+        <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+            <div id="toast" class="toast " role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                <!-- <img src="..." class="rounded me-2" alt="..."> -->
+                <span class="badge bg-danger rounded me-2">E</span>
+                <strong class="me-auto">Error</strong>
+                <!-- <small>11 mins ago</small> -->
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+                </div>
+                <div class="toast-body">
+                    {{message}}
+                </div>
+            </div>
+        </div>
+        
+         <!-- Bootstrap Javascripts -->  
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const toastElList = document.querySelectorAll('.toast')
+            const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl))
+            if ("{{ message }}") {
+                const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById("toast"))
+                toast.show()
+            }
+        </script>
+    </body>
 </html>
